@@ -71,9 +71,11 @@ public class AddressServiceImpl implements AddressService {
 	@Override
 	public void delete(Address address) {
 		Optional<Address> addOpt = repo.findById(address.getId());
-		if(addOpt.isPresent() && addOpt.get().getActivities().isEmpty()) {
+		if(addOpt.isPresent()) {
 			
 			try {
+				Address add = addOpt.get();
+				add.setActivities(null);
 				repo.delete(address);
 			} catch (Exception e) {
 				e.printStackTrace();

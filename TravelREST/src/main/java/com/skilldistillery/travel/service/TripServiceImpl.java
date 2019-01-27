@@ -8,14 +8,21 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.skilldistillery.travel.entities.Activity;
 import com.skilldistillery.travel.entities.Trip;
+import com.skilldistillery.travel.entities.User;
 import com.skilldistillery.travel.repositories.TripRepo;
+import com.skilldistillery.travel.repositories.UserRepo;
 @Service
 @Transactional
 public class TripServiceImpl implements TripService {
 	
 	@Autowired
 	private TripRepo repo;
+	@Autowired
+	private UserRepo uRepo;
+	@Autowired
+	private ActivityService actServ;
 	
 	@Override
 	public List<Trip> getAll() {
@@ -42,7 +49,11 @@ public class TripServiceImpl implements TripService {
 			Trip managed = tripOpt.get();
 			managed.setName(trip.getName());
 			managed.setDescription(trip.getDescription());
-			managed.setOwner(trip.getOwner());
+			if (trip.getOwner().getId() > 0) {
+				User owner = uRepo.findById(trip.getOwner()
+											.getId()).get();
+				managed.setOwner(owner);
+			}
 			return managed;
 			
 		}
@@ -53,6 +64,21 @@ public class TripServiceImpl implements TripService {
 	public Trip create(Trip trip) {
 
 		try {
+			if (trip.getOwner().getId() > 0) {
+				Optional<User> owner = uRepo.findById(trip.getOwner()
+											.getId());
+				
+				if (owner.isPresent()) {
+					
+					trip.setOwner(owner.get());
+				}
+				else {
+					throw new Exception("Not a vaild User");
+				}
+			}
+			else {
+				throw new Exception("Not a vaild User");
+			}
 			repo.saveAndFlush(trip);
 			return trip;
 		} catch (Exception e) {
@@ -65,10 +91,21 @@ public class TripServiceImpl implements TripService {
 	public void delete(Trip trip) {
 		
 		Optional<Trip> tripOpt = repo.findById(trip.getId());
-		if(tripOpt.isPresent() && tripOpt.get().getActivities().isEmpty() && tripOpt.get().getUsers().isEmpty()) {
+		if(tripOpt.isPresent()) {
 			
 			try {
+				trip = tripOpt.get();
+				List<Activity> actList = trip.getActivities();
+				for (Activity activity : actList) {
+					trip.removeActivity(activity);
+					actServ.delete(activity);
+				}
+				trip.setOwner(null);
+				for(User user: trip.getUsers()) {
+					trip.removeUser(user);
+				}
 				repo.delete(trip);
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

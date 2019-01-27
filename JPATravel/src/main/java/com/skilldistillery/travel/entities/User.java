@@ -38,19 +38,19 @@ public class User {
 	@JoinColumn(name="address_id")
 	private Address address;
 	@ManyToMany
+	@JsonIgnore
 	@JoinTable(name="user_trip",
 			joinColumns=@JoinColumn(name="user_id"),
 			inverseJoinColumns=@JoinColumn(name="trip_id"))
-	@JsonIgnore
 	private List<Trip> trips;
 	@OneToMany(mappedBy="owner")
 	@JsonIgnore
 	private List<Trip> ownedTrips;
 	@ManyToMany
+	@JsonIgnore
 	@JoinTable(name="activity_user",
 			joinColumns=@JoinColumn(name="user_id"),
 			inverseJoinColumns=@JoinColumn(name="activity_id"))
-	@JsonIgnore
 	private List<Activity> activities;
 	@OneToMany(mappedBy="owner")
 	@JsonIgnore

@@ -8,7 +8,11 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.skilldistillery.travel.entities.Activity;
+import com.skilldistillery.travel.entities.Address;
+import com.skilldistillery.travel.entities.Trip;
 import com.skilldistillery.travel.entities.User;
+import com.skilldistillery.travel.repositories.AddressRepo;
 import com.skilldistillery.travel.repositories.UserRepo;
 
 @Service
@@ -17,6 +21,12 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepo repo;
+	@Autowired
+	private AddressRepo aRepo;
+	@Autowired
+	private TripService tServe;
+	@Autowired
+	private ActivityService aServe;
 	
 	@Override
 	public List<User> getAll() {
@@ -60,6 +70,7 @@ public class UserServiceImpl implements UserService {
 	public User create(User user) {
 
 		try {
+			aRepo.saveAndFlush(user.getAddress());
 			repo.saveAndFlush(user);
 			return user;
 		} catch (Exception e) {
@@ -76,6 +87,27 @@ public class UserServiceImpl implements UserService {
 		if(userOpt.isPresent()) {
 			
 			try {
+				user = userOpt.get();
+				for(Activity act : user.getActivities()) {
+					user.removeActivity(act);
+				}
+				for(Activity act : user.getOwnedActivities()) {
+					user.removeOwnedActivity(act);
+					aServe.delete(act);
+				}
+				user.setAddress(null);
+				for(Trip trip : user.getTrips()) {
+					user.removeTrip(trip);
+				}
+				for(Trip trip : user.getOwnedTrips()) {
+					
+					user.removeOwnedTrip(trip);
+					tServe.delete(trip);
+				}
+				Address add = aRepo.findById(user.getAddress().getId()).get();
+				user.setAddress(null);
+				aRepo.delete(add);
+				
 				repo.delete(user);
 			} catch (Exception e) {
 				e.printStackTrace();

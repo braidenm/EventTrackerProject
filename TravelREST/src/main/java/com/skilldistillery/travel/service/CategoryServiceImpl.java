@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.skilldistillery.travel.entities.Activity;
 import com.skilldistillery.travel.entities.Category;
 import com.skilldistillery.travel.repositories.CategoryRepo;
 
@@ -64,9 +65,13 @@ public class CategoryServiceImpl implements CategoryService {
 	public void delete(Category cat) {
 
 		Optional<Category> catOpt = repo.findById(cat.getId());
-		if(catOpt.isPresent() && catOpt.get().getActivities().isEmpty()) {
+		if(catOpt.isPresent()) {
 			
 			try {
+				cat = catOpt.get();
+				for(Activity act : cat.getActivities()) {
+					cat.removeActivity(act);
+				}
 				repo.delete(cat);
 			} catch (Exception e) {
 				e.printStackTrace();

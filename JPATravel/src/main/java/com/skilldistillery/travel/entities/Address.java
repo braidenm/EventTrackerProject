@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Address {
 		//Fields
@@ -26,6 +28,7 @@ public class Address {
 		private String country;
 		private String description;
 		@OneToMany(mappedBy="address")
+		@JsonIgnore
 		private List<Activity> activities;
 		
 		//TODO set up list of activities 
