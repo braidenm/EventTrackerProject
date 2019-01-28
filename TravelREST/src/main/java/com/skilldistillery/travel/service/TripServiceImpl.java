@@ -113,4 +113,52 @@ public class TripServiceImpl implements TripService {
 
 	}
 
+	@Override
+	public List<Trip> getByNameOrDescription(String keyword) {
+		String[] kwordArr = keyword.split(" ");
+		StringBuilder kwordBuild = new StringBuilder();
+		for (String string : kwordArr) {
+			string = "%"+string+"%";
+			kwordBuild.append(string);
+		}
+		
+		return repo.findByNameLikeOrDescriptionLike(kwordBuild.toString(), kwordBuild.toString());
+	}
+
+	@Override
+	public List<Trip> getByOwnerName(String keyword) {
+
+		String[] kwordArr = keyword.split(" ");
+		StringBuilder kwordBuild = new StringBuilder();
+		for (String string : kwordArr) {
+			string = "%"+string+"%";
+			kwordBuild.append(string);
+		}
+		return repo.findByOwner_FnameLikeOrOwner_LnameLike(kwordBuild.toString(), kwordBuild.toString());
+	}
+
+	@Override
+	public List<Trip> getByUsersName(String keyword) {
+
+		String[] kwordArr = keyword.split(" ");
+		StringBuilder kwordBuild = new StringBuilder();
+		for (String string : kwordArr) {
+			string = "%"+string+"%";
+			kwordBuild.append(string);
+		}
+		return repo.findByUsers_FnameLikeOrUsers_LnameLike(kwordBuild.toString(), kwordBuild.toString());
+	}
+
+	@Override
+	public List<Trip> getByActivities(String keyword) {
+
+		String[] kwordArr = keyword.split(" ");
+		StringBuilder kwordBuild = new StringBuilder();
+		for (String string : kwordArr) {
+			string = "%"+string+"%";
+			kwordBuild.append(string);
+		}
+		return repo.findByActivities_NameLikeOrActivities_descriptionLike(kwordBuild.toString(), kwordBuild.toString());
+	}
+
 }

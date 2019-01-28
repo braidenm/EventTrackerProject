@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.skilldistillery.travel.entities.Trip;
 import com.skilldistillery.travel.entities.User;
 import com.skilldistillery.travel.service.UserService;
 
@@ -86,6 +87,79 @@ public class UserController {
 			
 		
 		return true;
+	}
+	
+	@GetMapping("users/search/name/{kword}")
+	public List<User> searchByName(@PathVariable String kword, HttpServletResponse res){
+		
+		
+		List<User> tripList = userService.getAllByName(kword);
+		if(!tripList.isEmpty()) {
+			res.setStatus(201);
+			return tripList;
+		}
+		res.setStatus(404);
+		return null;
+	}
+	@GetMapping("users/search/username/{kword}")
+	public List<User> searchByUserName(@PathVariable String kword, HttpServletResponse res){
+		
+		
+		List<User> tripList = userService.getAllUsername(kword);
+		if(!tripList.isEmpty()) {
+			res.setStatus(201);
+			return tripList;
+		}
+		res.setStatus(404);
+		return null;
+	}
+	@GetMapping("users/search/roll/{kword}")
+	public List<User> searchByRoll(@PathVariable String kword, HttpServletResponse res){
+		
+		
+		List<User> tripList = userService.getAllByRoll(kword);
+		if(!tripList.isEmpty()) {
+			res.setStatus(201);
+			return tripList;
+		}
+		res.setStatus(404);
+		return null;
+	}
+	@GetMapping("users/search/activity/{kword}")
+	public List<User> searchByActivity(@PathVariable String kword, HttpServletResponse res){
+		
+		
+		List<User> tripList = userService.getAllByActivities(kword);
+		if(!tripList.isEmpty()) {
+			res.setStatus(201);
+			return tripList;
+		}
+		res.setStatus(404);
+		return null;
+	}
+	@GetMapping("users/search/active/{bool}")
+	public List<User> searchByUserActive(@PathVariable Boolean bool, HttpServletResponse res){
+		
+		
+		List<User> tripList = userService.getAllByActive(bool);
+		if(!tripList.isEmpty()) {
+			res.setStatus(201);
+			return tripList;
+		}
+		res.setStatus(404);
+		return null;
+	}
+	@GetMapping("users/search/banned/{bool}")
+	public List<User> searchByUserBanned(@PathVariable Boolean bool, HttpServletResponse res){
+		
+		
+		List<User> tripList = userService.getAllBybanned(bool);
+		if(!tripList.isEmpty()) {
+			res.setStatus(201);
+			return tripList;
+		}
+		res.setStatus(404);
+		return null;
 	}
 	
 

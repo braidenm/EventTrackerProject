@@ -1,6 +1,7 @@
 package com.skilldistillery.travel.entities;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -12,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -25,9 +28,11 @@ public class Activity {
 	private int id;
 	private String name;
 	@Column(name="start_date")
-	private String startDate;
+	@Temporal(TemporalType.DATE)
+	private Date startDate;
 	@Column(name="end_date")
-	private String endDate;
+	@Temporal(TemporalType.DATE)
+	private Date endDate;
 	private String description;
 	@ManyToOne
 	@JoinColumn(name="owner_id")
@@ -70,16 +75,16 @@ public class Activity {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getStartDate() {
+	public Date getStartDate() {
 		return startDate;
 	}
-	public void setStartDate(String startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
-	public String getEndDate() {
+	public Date getEndDate() {
 		return endDate;
 	}
-	public void setEndDate(String endDate) {
+	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 	public String getDescription() {
@@ -143,7 +148,7 @@ public class Activity {
 		return "Activity [id=" + id + ", name=" + name + ", startDate=" + startDate + ", endDate=" + endDate
 				+ ", description=" + description + ", owner=" + owner + ", trip=" + trip + "]";
 	}
-	public Activity(int id, String name, String startDate, String endDate, String description, User owner, Trip trip,
+	public Activity(int id, String name, Date startDate, Date endDate, String description, User owner, Trip trip,
 			Address address) {
 		super();
 		this.id = id;

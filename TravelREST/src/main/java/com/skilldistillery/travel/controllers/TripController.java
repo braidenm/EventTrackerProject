@@ -85,5 +85,54 @@ public class TripController {
 		return true;
 	}
 	
+	@GetMapping("trips/search/{kword}")
+	public List<Trip> searchByName(@PathVariable String kword, HttpServletResponse res){
+		
+		
+		List<Trip> tripList =tripService.getByNameOrDescription(kword);
+		if(!tripList.isEmpty()) {
+			res.setStatus(201);
+			return tripList;
+		}
+		res.setStatus(404);
+		return null;
+	}
+	@GetMapping("trips/search/owner/{kword}")
+	public List<Trip> searchByOwner(@PathVariable String kword, HttpServletResponse res){
+		
+		
+		List<Trip> tripList =tripService.getByOwnerName(kword);
+		if(!tripList.isEmpty()) {
+			res.setStatus(201);
+			return tripList;
+		}
+		res.setStatus(404);
+		return null;
+	}
+	@GetMapping("trips/search/user/{kword}")
+	public List<Trip> searchByUser(@PathVariable String kword, HttpServletResponse res){
+		
+		
+		List<Trip> tripList =tripService.getByUsersName(kword);
+		if(!tripList.isEmpty()) {
+			res.setStatus(201);
+			return tripList;
+		}
+		res.setStatus(404);
+		return null;
+	}
+	@GetMapping("trips/search/activity/{kword}")
+	public List<Trip> searchByActivity(@PathVariable String kword, HttpServletResponse res){
+		
+		
+		List<Trip> tripList =tripService.getByActivities(kword);
+		if(!tripList.isEmpty()) {
+			res.setStatus(201);
+			return tripList;
+		}
+		res.setStatus(404);
+		return null;
+	}
+	
 
 }

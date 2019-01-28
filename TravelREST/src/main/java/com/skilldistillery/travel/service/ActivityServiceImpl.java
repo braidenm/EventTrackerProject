@@ -127,4 +127,51 @@ public class ActivityServiceImpl implements ActivityService {
 		}
 	}
 
+	@Override
+	public List<Activity> getAllByStartDate() {
+		return repo.findAllSortByStartDateDesc();
+	}
+
+	@Override
+	public List<Activity> getByNameOrDescription(String keyword) {
+		String[] kwordArr = keyword.split(" ");
+		StringBuilder kwordBuild = new StringBuilder();
+		for (String string : kwordArr) {
+			string = "%"+string+"%";
+			kwordBuild.append(string);
+		}
+		
+		
+		return repo.findByNameLikeOrDescriptionLike(kwordBuild.toString(), kwordBuild.toString());
+	}
+
+	@Override
+	public List<Activity> getByOwnerName(String keyword) {
+		String[] kwordArr = keyword.split(" ");
+		StringBuilder kwordBuild = new StringBuilder();
+		for (String string : kwordArr) {
+			string = "%"+string+"%";
+			kwordBuild.append(string);
+		}
+		
+		return repo.findByOwner_FnameLikeOrOwner_LnameLike(kwordBuild.toString(), kwordBuild.toString());
+	}
+
+	@Override
+	public List<Activity> getByTripName(String keyword) {
+		
+		String[] kwordArr = keyword.split(" ");
+		StringBuilder kwordBuild = new StringBuilder();
+		for (String string : kwordArr) {
+			string = "%"+string+"%";
+			kwordBuild.append(string);
+		}
+		return repo.findByTrip_NameLike(kwordBuild.toString());
+	}
+
+	@Override
+	public List<Activity> getByCategoryId(int catId) {
+		return repo.findByCategories_Id(catId);
+	}
+
 }

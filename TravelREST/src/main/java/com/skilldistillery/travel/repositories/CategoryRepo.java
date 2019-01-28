@@ -6,4 +6,5 @@ import com.skilldistillery.travel.entities.Category;
 
 public interface CategoryRepo extends JpaRepository<Category, Integer> {
 
+	
 }

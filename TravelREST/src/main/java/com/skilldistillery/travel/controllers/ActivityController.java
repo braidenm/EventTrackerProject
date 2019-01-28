@@ -88,49 +88,62 @@ public class ActivityController {
 		return true;
 	}
 	
-//	@GetMapping("categories/{id}/activities")
-//	public List<Activity> getPostsByCategory(@PathVariable("id") Integer catId, HttpServletResponse resp){
-//		
-//		List<Activity> postList = actService.getAllPostFromCategory(catId);
-//		
-//		if(!postList.isEmpty()) {
-//			resp.setStatus(201);
-//			return postList;
-//		}
-//		resp.setStatus(404);
-//		return null;
-//	}
-//	
-//	@GetMapping("posts/search/{keyword}")
-//	public List<Post> getPostByKeyword(@PathVariable String keyword, HttpServletResponse resp){
-//		
-//		List<Post> postList =postService.searchByKeyword(keyword);
-//		
-//		if(!postList.isEmpty()) {
-//			resp.setStatus(201);
-//			return postList;
-//		}
-//		resp.setStatus(404);
-//		return null;
-//		
-//		
-//	}
-//	
-//	@GetMapping("posts/search/price/{low}/{high}")
-//	public List<Post> getByCostBetween(@PathVariable("low") Double min, @PathVariable("high") Double max, HttpServletResponse resp){
-//
-//		
-//		List<Post> postList =postService.getByPriceRange(min, max);
-//		
-//		if(!postList.isEmpty()) {
-//			resp.setStatus(201);
-//			return postList;
-//		}
-//		resp.setStatus(404);
-//		return null;
-//		
-//	}
+	@GetMapping("activities/date")
+	public List<Activity> getAllActivityByDate(){
+		return actService.getAllByStartDate();
+	}
 	
+	@GetMapping("activities/search/{kword}")
+	public List<Activity> searchByName(@PathVariable String kword, HttpServletResponse res){
+		
+		
+		List<Activity> actList = actService.getByNameOrDescription(kword);
+		if(!actList.isEmpty()) {
+			res.setStatus(201);
+			return actList;
+		}
+		res.setStatus(404);
+		return null;
+	}
+	@GetMapping("activities/search/owner/{kword}")
+	public List<Activity> searchByOwner(@PathVariable String kword, HttpServletResponse res){
+		
+		
+		List<Activity> actList = actService.getByOwnerName(kword);
+		if(!actList.isEmpty()) {
+			res.setStatus(201);
+			return actList;
+		}
+		res.setStatus(404);
+		return null;
+	}
+	
+	@GetMapping("activities/search/trip/{kword}")
+	public List<Activity> searchByTrip(@PathVariable String kword, HttpServletResponse res){
+		
+		
+		List<Activity> actList = actService.getByTripName(kword);
+		if(!actList.isEmpty()) {
+			res.setStatus(201);
+			return actList;
+		}
+		res.setStatus(404);
+		return null;
+	}
+	@GetMapping("activities/search/category/{catId}")
+	public List<Activity> searchByCategory(@PathVariable Integer catId, HttpServletResponse res){
+		
+		
+		List<Activity> actList = actService.getByCategoryId(catId);
+		if(!actList.isEmpty()) {
+			res.setStatus(201);
+			return actList;
+		}
+		res.setStatus(404);
+		return null;
+	}
+	
+
 	
 	
 	

@@ -115,4 +115,55 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+	@Override
+	public List<User> getAllByName(String fname) {
+		String[] kwordArr = fname.split(" ");
+		StringBuilder kwordBuild = new StringBuilder();
+		for (String string : kwordArr) {
+			string = "%"+string+"%";
+			kwordBuild.append(string);
+		}
+		
+		return repo.findByFnameLikeOrLnameLike(kwordBuild.toString(), kwordBuild.toString());
+	}
+
+	@Override
+	public List<User> getAllUsername(String keyword) {
+
+		String[] kwordArr = keyword.split(" ");
+		StringBuilder kwordBuild = new StringBuilder();
+		for (String string : kwordArr) {
+			string = "%"+string+"%";
+			kwordBuild.append(string);
+		}
+		return repo.findByUsername(kwordBuild.toString());
+	}
+
+	@Override
+	public List<User> getAllByActive(boolean active) {
+
+		return repo.findByActive(active);
+	}
+
+	@Override
+	public List<User> getAllBybanned(boolean banned) {
+		return repo.findByBanned(banned);
+	}
+
+	@Override
+	public List<User> getAllByRoll(String role) {
+		return repo.findByRole(role);
+	}
+
+	@Override
+	public List<User> getAllByActivities(String activityName) {
+		String[] kwordArr = activityName.split(" ");
+		StringBuilder kwordBuild = new StringBuilder();
+		for (String string : kwordArr) {
+			string = "%"+string+"%";
+			kwordBuild.append(string);
+		}
+		return repo.findByActivities_nameLikeOrActivities_Description(kwordBuild.toString(), kwordBuild.toString());
+	}
+
 }
