@@ -96,8 +96,15 @@ public class ActivityServiceImpl implements ActivityService {
 			else {
 				throw new Exception("Not a valid Trip");
 			}
+			System.out.println(act.getStartDate());
+//			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//			Date startDate = sdf.parse(sDate);
+//			Date endDate = sdf.parse(eDate);
+//			act.setStartDate(startDate);
+//			act.setEndDate(endDate);
 			aRepo.saveAndFlush(act.getAddress());
 			act = repo.saveAndFlush(act);
+			
 			owner.get().addOwnedActivity(act);
 			uRepo.saveAndFlush(owner.get());
 			trip.get().addActivity(act);

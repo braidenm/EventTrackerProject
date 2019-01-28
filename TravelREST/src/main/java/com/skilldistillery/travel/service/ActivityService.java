@@ -14,8 +14,8 @@ public interface ActivityService {
 	List<Activity> getByCategoryId(int catId);
 	Activity getById(int id);
 	Activity replace(int id, Activity act);
-	Activity create(Activity act);
 	void delete(Activity act);
+	Activity create(Activity act);
 	
 	
 

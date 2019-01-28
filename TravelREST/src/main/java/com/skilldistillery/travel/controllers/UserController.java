@@ -160,22 +160,22 @@ public class UserController {
 		res.setStatus(404);
 		return null;
 	}
-	@PostMapping("users/{userId}/trips/{tripId}")
+	@PutMapping("users/{userId}/add/trips/{tripId}")
 	public User addTripToUser(@PathVariable Integer userId, @PathVariable Integer tripId, HttpServletResponse res){
 		
 		return userService.addTrip(tripId, userId);
 	}
-	@PutMapping("users/{userId}/trips/{tripId}")
+	@PutMapping("users/{userId}/remove/trips/{tripId}")
 	public User removeTripfromUser(@PathVariable Integer userId, @PathVariable Integer tripId, HttpServletResponse res){
 		
 		return userService.removeTrip(tripId, userId);
 	}
-	@PostMapping("users/{userId}/activities/{actId}")
+	@PutMapping("users/{userId}/add/activities/{actId}")
 	public User addActivityToUser(@PathVariable Integer userId, @PathVariable Integer actId, HttpServletResponse res){
 		
 		return userService.addActivity(actId, userId);
 	}
-	@PutMapping("users/{userId}/activities/{tripId}")
+	@PutMapping("users/{userId}/remove/activities/{tripId}")
 	public User removeActivityfromUser(@PathVariable Integer userId, @PathVariable Integer actId, HttpServletResponse res){
 		
 		return userService.removeTrip(actId, userId);

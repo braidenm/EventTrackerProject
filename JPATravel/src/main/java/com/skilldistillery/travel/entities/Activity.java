@@ -28,11 +28,11 @@ public class Activity {
 	private int id;
 	private String name;
 	@Column(name="start_date")
-	@Temporal(TemporalType.DATE)
-	private Date startDate;
+	
+	private String startDate;
 	@Column(name="end_date")
-	@Temporal(TemporalType.DATE)
-	private Date endDate;
+	
+	private String endDate;
 	private String description;
 	@ManyToOne
 	@JoinColumn(name="owner_id")
@@ -75,16 +75,16 @@ public class Activity {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Date getStartDate() {
+	public String getStartDate() {
 		return startDate;
 	}
-	public void setStartDate(Date startDate) {
+	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
-	public Date getEndDate() {
+	public String getEndDate() {
 		return endDate;
 	}
-	public void setEndDate(Date endDate) {
+	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
 	public String getDescription() {
@@ -148,7 +148,7 @@ public class Activity {
 		return "Activity [id=" + id + ", name=" + name + ", startDate=" + startDate + ", endDate=" + endDate
 				+ ", description=" + description + ", owner=" + owner + ", trip=" + trip + "]";
 	}
-	public Activity(int id, String name, Date startDate, Date endDate, String description, User owner, Trip trip,
+	public Activity(int id, String name, String startDate, String endDate, String description, User owner, Trip trip,
 			Address address) {
 		super();
 		this.id = id;
