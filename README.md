@@ -23,6 +23,8 @@ appropriate database table.
     ** Create a service class to add logic to the data
     ** Create a REST controller with API's taking in requests and sending back data
     
+- Test API connections with POST MAN
+    
 - Deploy to AWS
 
 ## Technology Used
