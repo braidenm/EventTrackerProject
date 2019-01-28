@@ -91,14 +91,17 @@ public class ActivityServiceImpl implements ActivityService {
 			}
 			Optional<Trip> trip = tRepo.findById(act.getTrip().getId());
 			if(trip.isPresent()) {
-				
 				act.setTrip(trip.get());
 			}
 			else {
 				throw new Exception("Not a valid Trip");
 			}
 			aRepo.saveAndFlush(act.getAddress());
-			repo.saveAndFlush(act);
+			act = repo.saveAndFlush(act);
+			owner.get().addOwnedActivity(act);
+			uRepo.saveAndFlush(owner.get());
+			trip.get().addActivity(act);
+			tRepo.saveAndFlush(trip.get());
 			return act;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -127,10 +130,10 @@ public class ActivityServiceImpl implements ActivityService {
 		}
 	}
 
-	@Override
-	public List<Activity> getAllByStartDate() {
-		return repo.findAllSortByStartDateDesc();
-	}
+//	@Override
+//	public List<Activity> getAllByStartDate() {
+//		return repo.findAll;
+//	}
 
 	@Override
 	public List<Activity> getByNameOrDescription(String keyword) {

@@ -17,5 +17,9 @@ public interface UserService {
 	User replace(int id, User user);
 	User create(User user);
 	void delete(User user);
+	User addTrip(int tripId, int userId);
+	User removeTrip(int tripId, int userId);
+	User addActivity(int actId, int userId);
+	User removeActivity(int actId, int userId);
 
 }

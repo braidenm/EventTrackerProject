@@ -88,10 +88,10 @@ public class ActivityController {
 		return true;
 	}
 	
-	@GetMapping("activities/date")
-	public List<Activity> getAllActivityByDate(){
-		return actService.getAllByStartDate();
-	}
+//	@GetMapping("activities/date")
+//	public List<Activity> getAllActivityByDate(){
+//		return actService.getAllByStartDate();
+//	}
 	
 	@GetMapping("activities/search/{kword}")
 	public List<Activity> searchByName(@PathVariable String kword, HttpServletResponse res){

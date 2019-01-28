@@ -8,7 +8,7 @@ import com.skilldistillery.travel.entities.Activity;
 
 public interface ActivityRepo extends JpaRepository<Activity, Integer> {
 
-	List<Activity> findAllSortByStartDateDesc();
+//	List<Activity> findAllOrderByStartDateDesc();
 	List<Activity> findByNameLikeOrDescriptionLike(String name, String description);
 	List<Activity> findByOwner_FnameLikeOrOwner_LnameLike(String fname, String lname);
 	List<Activity> findByTrip_NameLike(String keyword);

@@ -86,8 +86,8 @@ DROP TABLE IF EXISTS `activity` ;
 CREATE TABLE IF NOT EXISTS `activity` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
-  `start_date` VARCHAR(45) NULL,
-  `end_date` VARCHAR(45) NULL,
+  `start_date` DATE NULL,
+  `end_date` DATE NULL,
   `description` VARCHAR(500) NULL,
   `address_id` INT NULL,
   `owner_id` INT NOT NULL,
@@ -352,7 +352,7 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `traveldb`;
-INSERT INTO `activity` (`id`, `name`, `start_date`, `end_date`, `description`, `address_id`, `owner_id`, `trip_id`) VALUES (1, 'Test Activity', '2019-01-31', '2019-01-31', 'testing this activity', 2, 2, 1);
+INSERT INTO `activity` (`id`, `name`, `start_date`, `end_date`, `description`, `address_id`, `owner_id`, `trip_id`) VALUES (1, 'Test Activity', '2019-01-31', '2019-01-31', 'testing this activity', 2, 2, NULL);
 
 COMMIT;
 

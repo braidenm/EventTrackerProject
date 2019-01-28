@@ -12,7 +12,9 @@ import com.skilldistillery.travel.entities.Activity;
 import com.skilldistillery.travel.entities.Address;
 import com.skilldistillery.travel.entities.Trip;
 import com.skilldistillery.travel.entities.User;
+import com.skilldistillery.travel.repositories.ActivityRepo;
 import com.skilldistillery.travel.repositories.AddressRepo;
+import com.skilldistillery.travel.repositories.TripRepo;
 import com.skilldistillery.travel.repositories.UserRepo;
 
 @Service
@@ -23,6 +25,10 @@ public class UserServiceImpl implements UserService {
 	private UserRepo repo;
 	@Autowired
 	private AddressRepo aRepo;
+	@Autowired
+	private TripRepo tRepo;
+	@Autowired
+	private ActivityRepo actRepo;
 	@Autowired
 	private TripService tServe;
 	@Autowired
@@ -164,6 +170,114 @@ public class UserServiceImpl implements UserService {
 			kwordBuild.append(string);
 		}
 		return repo.findByActivities_nameLikeOrActivities_Description(kwordBuild.toString(), kwordBuild.toString());
+	}
+
+	@Override
+	public User addTrip(int tripId, int userId) {
+		try {
+			Optional<Trip> tripOpt = tRepo.findById(tripId);
+			Optional<User> uOpt = repo.findById(userId);
+			
+			if(tripOpt.isPresent() && uOpt.isPresent()) {
+				Trip trip = tripOpt.get();
+				User user = uOpt.get();
+				user.addTrip(trip);
+				tRepo.saveAndFlush(trip);
+				repo.saveAndFlush(user);
+				return user;
+				
+			}
+			else {
+				throw new Exception("not a valid user or trip");
+			}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+
+	@Override
+	public User removeTrip(int tripId, int userId) {
+		try {
+			Optional<Trip> tripOpt = tRepo.findById(tripId);
+			Optional<User> uOpt = repo.findById(userId);
+			
+			if(tripOpt.isPresent() && uOpt.isPresent()) {
+				Trip trip = tripOpt.get();
+				User user = uOpt.get();
+				user.removeTrip(trip);
+				tRepo.saveAndFlush(trip);
+				repo.saveAndFlush(user);
+				return user;
+				
+			}
+			else {
+				throw new Exception("not a valid user or trip");
+			}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+
+	@Override
+	public User addActivity(int actId, int userId) {
+		try {
+			Optional<Activity> actOpt = actRepo.findById(actId);
+			Optional<User> uOpt = repo.findById(userId);
+			
+			if(actOpt.isPresent() && uOpt.isPresent()) {
+				Activity act = actOpt.get();
+				User user = uOpt.get();
+				user.addActivity(act);
+				actRepo.saveAndFlush(act);
+				repo.saveAndFlush(user);
+				return user;
+				
+			}
+			else {
+				throw new Exception("not a valid user or Activity");
+			}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+
+	@Override
+	public User removeActivity(int actId, int userId) {
+		try {
+			Optional<Activity> actOpt = actRepo.findById(actId);
+			Optional<User> uOpt = repo.findById(userId);
+			
+			if(actOpt.isPresent() && uOpt.isPresent()) {
+				Activity act = actOpt.get();
+				User user = uOpt.get();
+				user.removeActivity(act);
+				actRepo.saveAndFlush(act);
+				repo.saveAndFlush(user);
+				return user;
+				
+			}
+			else {
+				throw new Exception("not a valid user or Activity");
+			}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 
 }

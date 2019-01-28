@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.skilldistillery.travel.entities.Trip;
 import com.skilldistillery.travel.entities.User;
 import com.skilldistillery.travel.service.UserService;
 
@@ -161,6 +160,28 @@ public class UserController {
 		res.setStatus(404);
 		return null;
 	}
+	@PostMapping("users/{userId}/trips/{tripId}")
+	public User addTripToUser(@PathVariable Integer userId, @PathVariable Integer tripId, HttpServletResponse res){
+		
+		return userService.addTrip(tripId, userId);
+	}
+	@PutMapping("users/{userId}/trips/{tripId}")
+	public User removeTripfromUser(@PathVariable Integer userId, @PathVariable Integer tripId, HttpServletResponse res){
+		
+		return userService.removeTrip(tripId, userId);
+	}
+	@PostMapping("users/{userId}/activities/{actId}")
+	public User addActivityToUser(@PathVariable Integer userId, @PathVariable Integer actId, HttpServletResponse res){
+		
+		return userService.addActivity(actId, userId);
+	}
+	@PutMapping("users/{userId}/activities/{tripId}")
+	public User removeActivityfromUser(@PathVariable Integer userId, @PathVariable Integer actId, HttpServletResponse res){
+		
+		return userService.removeTrip(actId, userId);
+	}
+	
+	
 	
 
 }
