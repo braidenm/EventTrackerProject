@@ -31,7 +31,6 @@ public class Activity {
 	
 	private String startDate;
 	@Column(name="end_date")
-	
 	private String endDate;
 	private String description;
 	@ManyToOne

@@ -56,17 +56,20 @@ public class ActivityServiceImpl implements ActivityService {
 			managed.setStartDate(act.getStartDate());
 			managed.setEndDate(act.getEndDate());
 			managed.setDescription(act.getDescription());
-			User owner = uRepo.findById(act.getOwner().getId()).get();
+			//TODO: hard coding in an owner untill functionality is done
+			User owner = uRepo.findById(2).get();
 			if( owner != null) {
 				
 				managed.setOwner(owner);
 			}
-			Trip trip = tRepo.findById(act.getTrip().getId()).get();
+			//TODO: hard coding in an trip untill functionality is done
+			Trip trip = tRepo.findById(1).get();
 			if(trip != null) {
 				
 				managed.setTrip(trip);
 			}
-			Address add = aRepo.findById(act.getAddress().getId()).get();
+			//TODO: hard coding in an trip untill functionality is done
+			Address add = aRepo.findById(1).get();
 			if (add != null) {
 				
 				managed.setAddress(add);
@@ -81,7 +84,8 @@ public class ActivityServiceImpl implements ActivityService {
 	@Override
 	public Activity create(Activity act) {
 		try {
-			Optional<User> owner = uRepo.findById(act.getOwner().getId());
+			//hard coding in an owner until full functionality is implimented.
+			Optional<User> owner = uRepo.findById(2);
 			if( owner.isPresent()) {
 				
 				act.setOwner(owner.get());
@@ -89,7 +93,8 @@ public class ActivityServiceImpl implements ActivityService {
 			else {
 				throw new Exception("Not a valid owner");
 			}
-			Optional<Trip> trip = tRepo.findById(act.getTrip().getId());
+			//hard coding in trip id
+			Optional<Trip> trip = tRepo.findById(1);
 			if(trip.isPresent()) {
 				act.setTrip(trip.get());
 			}
@@ -102,7 +107,8 @@ public class ActivityServiceImpl implements ActivityService {
 //			Date endDate = sdf.parse(eDate);
 //			act.setStartDate(startDate);
 //			act.setEndDate(endDate);
-			aRepo.saveAndFlush(act.getAddress());
+			//TODO: activate this when address gets implimented
+//			aRepo.saveAndFlush(act.getAddress());
 			act = repo.saveAndFlush(act);
 			
 			owner.get().addOwnedActivity(act);
@@ -121,19 +127,16 @@ public class ActivityServiceImpl implements ActivityService {
 
 		Optional<Activity> actOpt = repo.findById(act.getId());
 		if(actOpt.isPresent()) {
-			try {
+			
 				act = actOpt.get();
 				act.setCategories(null);
 				act.setUsers(null);
-				Address add = aRepo.findById(act.getAddress().getId()).get();
-				act.setAddress(add);
-				aRepo.delete(add);
+				act.setAddress(null);
 				act.setOwner(null);
 				act.setTrip(null);
 				repo.delete(act);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			
+			
 		}
 	}
 
