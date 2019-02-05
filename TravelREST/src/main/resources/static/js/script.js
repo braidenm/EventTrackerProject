@@ -1,16 +1,65 @@
+
+
 window.addEventListener('load', function(e) {
   console.log('document loaded');
+  console.log('document hello');
+  getAllCategories()
   
-  init();
 });
 
+function getAllCategories() {
+	var xhr = new XMLHttpRequest();
+	
+	xhr.open('GET', 'api/categories/', true);
+	
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4 && xhr.status < 400) {
+			console.log(xhr.responseText);
+			var data = JSON.parse(xhr.responseText);
+			console.log("in get all cat: "+data)
+			init(data);
+			
+		}
+		
+		if (xhr.readyState === 4 && xhr.status >= 400) {
+			console.error(xhr.status + ': ' + xhr.responseText);
+			var activityData = document.getElementById('displayActivity');
+			activityData.textContent = "No Activities were found";
+		}
+	};
+	
+	xhr.send(null);
+}
 
 
-function init() {
+function init(categories) {
+	
+	
+	var select =document.createElement("select");
+	select.name="select";
+	select.setAttribute("multiple", null);
+	select.setAttribute("size", 5);
+	
+	for(let i = 0; i< categories.length; i++){
+		let option = document.createElement("option");
+		option.textContent = categories[i].name;
+		option.value = categories[i].id;
+		select.appendChild(option);
+	}
+	document.createActivity.appendChild(select);
+	let input = document.createElement('input');
+	input.name = 'createActivity';
+	input.type = 'button';
+	input.classList.add('btn');
+	input.classList.add('btn-primary');
+	input.value = 'Create Activity';
+	
+	document.createActivity.appendChild(input);
 	getAllActivities();
 	
 	document.createActivity.createActivity.addEventListener('click', createActivity);
 }
+
 function moreDetails(activity, div){
 	  let editf = document.createElement('form');
 	  let deletef = document.createElement('form');
@@ -19,18 +68,22 @@ function moreDetails(activity, div){
 	  let p = document.createElement('p');
 	  let li1 = document.createElement('li');
 	  let li2 = document.createElement('li');
+	  let li3 = document.createElement('li');
 	  let ul = document.createElement('ul');
+	  let ul2 = document.createElement('ul');
 	  
 	  //button stuff
 	  editButton.name="editButton";
 	  editButton.type="button";
 	  editButton.value="Edit";
-	  editButton.class="btn btn-primary";
+	  editButton.classList.add('btn');
+	  editButton.classList.add('btn-primary');
 	  
 	  deleteButton.name="deleteButton";
 	  deleteButton.type="button";
 	  deleteButton.value="delete";
-	  deleteButton.class="btn btn-danger";
+	  deleteButton.classList.add('btn');
+	  deleteButton.classList.add('btn-danger');
 	  
 	  editf.appendChild(editButton);
 	  deletef.appendChild(deleteButton);
@@ -47,20 +100,31 @@ function moreDetails(activity, div){
 	  p.textContent = activity.description;
 	  li1.textContent = activity.startDate;
 	  li2.textContent = activity.endDate;
+	  li3.textContent = "categories: ";
+	  li3.appendChild(ul2);
+	  for(let i = 0; i< activity.categories.length; i++){
+		  let li = document.createElement('li');
+		  li.textContent = activity.categories[i].name;
+		  ul2.appendChild(li);
+		  
+	  }
 	  
 	  //connecting
 	  div.appendChild(p);
       div.appendChild(ul);
 	  div.lastElementChild.appendChild(li1);
 	  div.lastElementChild.appendChild(li2);
+	  div.lastElementChild.appendChild(li3);
 	  div.appendChild(editButton);
       div.appendChild(deleteButton);
       
+      console.log("Categories: "+activity.categories);
 }
 
 function displayActitvities(activities) {
 	  var dataDiv = document.getElementById('displayActivity');
 	  dataDiv.textContent = '';
+	  console.log("in display Activities");
 	  
 	 for (let i = 0; i < activities.length; i++) {
 		 
@@ -69,20 +133,15 @@ function displayActitvities(activities) {
 		  div.class="activityDiv";
 		  dataDiv.appendChild(div);
 		  
-		 
-		  
-		 
 		  //activity DATA
 		  h1.textContent = activities[i].name;
-		  
-		  
 			  
 		  //connecting everything
 		  div.appendChild(h1);
-		  
 	      
 	      div.addEventListener("click", function(e){
 	    	  closeDetails();
+	    	  console.log("going to more details");
 	    	  moreDetails(activities[i], div);
 	      });
 		 
@@ -111,6 +170,21 @@ function editForm(activity){
 	document.createActivity.startDate.value=activity.startDate;
 	document.createActivity.endDate.value=activity.endDate;
 	document.createActivity.description.value=activity.description;
+	let children = document.createActivity.select.children;
+	for(let i =0; i<children.length; i++){
+		
+		for(let j = 0; j < activity.categories.length; j++){
+			
+			if(activity.categories[j].name === children[i].textContent){
+				children[i].setAttribute('selected', null)
+			}
+		}
+		
+	}
+	
+	
+	
+	
 	document.createActivity.createActivity.removeEventListener('click', createActivity);
 	
 	document.createActivity.createActivity.name="editActivity";
@@ -142,6 +216,7 @@ function getAllActivities() {
 	xhr.send(null);
 }
 
+
 function editActivity(e){
 	e.preventDefault();
 	
@@ -161,6 +236,10 @@ function editActivity(e){
 				document.createActivity.startDate.value='';
 				document.createActivity.endDate.value='';
 				document.createActivity.description.value='';
+				for(let i = 0; i<document.createActivity.select.children.length; i++){
+					document.createActivity.select.children[i].removeAttribute('selected');
+				}
+				
 				document.createActivity.editActivity.value="Create Activity";
 				document.createActivity.editActivity.removeEventListener('click', createActivity);
 				document.createActivity.editActivity.name="createActivity";
@@ -176,7 +255,7 @@ function editActivity(e){
 				displayActivity.textContent = "activities Not Found";
 			}
 		};
-		
+		console.log("value of: " + document.createActivity.select.value);
 		var activity = {
 				
 				id: document.createActivity.id.value,
@@ -184,10 +263,19 @@ function editActivity(e){
 				description: document.createActivity.description.value,
 				startDate: document.createActivity.startDate.value,
 				endDate: document.createActivity.endDate.value,
+				categories: [],
+		}
+		
+		for(let i = 0 ; i< document.createActivity.select.options.length; i++){
+			if(document.createActivity.select.options[i].selected){
+				let cid =document.createActivity.select.options[i].value;
+				activity.categories.push({"id": cid});
+			}
 		}
 		
 		
 		var activityObj = JSON.stringify(activity);
+		console.log('activity obj: '+activityObj)
 
 		xhr.send(activityObj);
 }
@@ -291,8 +379,15 @@ function createActivity(e) {
 				description: document.createActivity.description.value,
 				startDate: document.createActivity.startDate.value,
 				endDate: document.createActivity.endDate.value,
+				categories: [],
 		}
 		
+		for(let i = 0 ; i< document.createActivity.select.options.length; i++){
+			if(document.createActivity.select.options[i].selected){
+				let cid =document.createActivity.select.options[i].value;
+				activity.categories.push({"id": cid});
+			}
+		}
 		
 		var activityObj = JSON.stringify(activity);
 

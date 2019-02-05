@@ -43,7 +43,6 @@ public class Activity {
 	@JoinColumn(name="trip_id")
 	private Trip trip;
 	@ManyToMany
-	@JsonIgnore
 	@JoinTable(name="activity_category",
 			joinColumns=@JoinColumn(name="activity_id"),
 			inverseJoinColumns=@JoinColumn(name="category_id"))
@@ -145,7 +144,7 @@ public class Activity {
 	@Override
 	public String toString() {
 		return "Activity [id=" + id + ", name=" + name + ", startDate=" + startDate + ", endDate=" + endDate
-				+ ", description=" + description + ", owner=" + owner + ", trip=" + trip + "]";
+				+ ", description=" + description + ", owner=" + owner+", categories=" + categories+ ", trip=" + trip + "]";
 	}
 	public Activity(int id, String name, String startDate, String endDate, String description, User owner, Trip trip,
 			Address address) {

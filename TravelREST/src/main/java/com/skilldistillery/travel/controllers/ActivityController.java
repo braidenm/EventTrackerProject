@@ -64,7 +64,10 @@ public class ActivityController {
 	
 	@PutMapping("activities/{id}")
 	public Activity replaceactivities(@PathVariable Integer id, @RequestBody Activity act, HttpServletResponse res) {
-		 act = actService.replace(id, act);
+		System.out.println("activity before persist: " + act);
+		
+		act = actService.replace(id, act);
+		System.out.println("activity after persist: " + act);
 		if(act != null) {
 			res.setStatus(201);
 			return act;

@@ -56,6 +56,7 @@ public class ActivityServiceImpl implements ActivityService {
 			managed.setStartDate(act.getStartDate());
 			managed.setEndDate(act.getEndDate());
 			managed.setDescription(act.getDescription());
+			managed.setCategories(act.getCategories());
 			//TODO: hard coding in an owner untill functionality is done
 			User owner = uRepo.findById(2).get();
 			if( owner != null) {
