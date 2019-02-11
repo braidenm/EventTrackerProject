@@ -17,7 +17,7 @@ Used angular to build the front end. was not able to fully implement all of the 
 
 ## Description
 
-Keep track of your trips by logging details about who went, the dates, what activities, comments, expenses, and location. Users that are not logged in can see trips and certain details. Create an account and be able to set up trips, edit details, and even delete(deactivate) the trip. signed in as an admin will allow for more details on everything and be able to actually delete or reactivate content/users. The admin can also ban users from the site. 
+Ultimate goal for the project is to keep track of your trips by logging details about who went, the dates, what activities, comments, expenses, and location. Users that are not logged in can see trips and certain details. Create an account and be able to set up trips, edit details, and even delete(deactivate) the trip. signed in as an admin will allow for more details on everything and be able to actually delete or reactivate content/users. The admin can also ban users from the site.
 
 
 
@@ -40,6 +40,11 @@ appropriate database table.
 - Test API connections with POST MAN
     
 - Deploy to AWS
+
+### WEEK 12 UPDATE (addional tasks)
+
+- build an angular project and connect the Java project to display on a web app
+- 
 
 ## Technology Used
 
