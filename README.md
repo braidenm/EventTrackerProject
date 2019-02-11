@@ -6,9 +6,6 @@ Used angular to build the front end. was not able to fully implement all of the 
 
 ### Stretch Goals
 
-I have completed most of these on the back end. 
-Goals:
-
 * Attach a user aspect (only see relevent info.) -> java(entity, tested, repository, and controller completed)      
 * Include address information with map  -> java and Database side completed
 * Include pictures -> Databse schema completed
