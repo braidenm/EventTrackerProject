@@ -31,10 +31,7 @@ export class ActivityViewComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     this.aService.show(id).subscribe(
         data => {
-          console.log(data);
-
           this.activity = data;
-          console.log(this.activity);
         },
         err => {
           this.router.navigateByUrl('notFound');
@@ -55,20 +52,15 @@ export class ActivityViewComponent implements OnInit {
   }
 
   addCategory(id) {
-    console.log('************');
-    console.log(id);
-
     this.cService.show(id).subscribe(
         cat => {
           for (const c of this.activity.categories) {
 
             if (c.id === cat.id) {
-              console.log('in if statement');
               this.categories = [];
               return;
             }
           }
-          console.log(cat);
 
           this.activity.categories.push(cat);
           this.updateActivity();
@@ -101,8 +93,6 @@ export class ActivityViewComponent implements OnInit {
     this.cService.index().subscribe(
       data => {
         this.categories = data;
-        console.log(this.categories);
-
       },
       err => console.log('error getting categories')
 

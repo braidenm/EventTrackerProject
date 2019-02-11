@@ -63,7 +63,6 @@ export class TripViewComponent implements OnInit {
 }
   addActivity(form: NgForm, tripId: number) {
     this.newActivity.name = form.value.name;
-    console.log(tripId);
     // for (const trip of this.trips) {
 
     //   if (trip.id === tripId) {
