@@ -1,5 +1,22 @@
 ## WEEK 11 HOME-WORK (Event Tracker REST Project)
 
+## WEEK 12 HOMER-WORK UPDATE
+ 
+Used angular to build the front end. was not able to fully implement all of the features set up in the back end. Basic functionality works: see a list of trips and click on one to see the activities associated with that trip. Add activities, edit the trip details, or delete the trip from the main page. Clicking on an activity will open a new window with more details about that activity including the start and end dates, description, and categories. Add more categories, edit the activity detail, or delete the activity. 
+
+### Stretch Goals
+
+I have completed most of these on the back end. 
++-------------------------------------------------------------------------------------------------------------------+
+|              *****Goal:******                  || Progress (database schema -> java (mapped and tested) -> angular| 
++-------------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------------------------------------+
+|Attach a user aspect (only see relevent info.)  || java(entity, tested, repository, and controller completed)      |
++-------------------------------------------------------------------------------------------------------------------+
+|include address information with map            || java(Entity, tested, repository, and controller completed)      |
++-------------------------------------------------------------------------------------------------------------------+
+|Include Expense forms                           || Database Schema completed                                       |
+
 
 ## Description
 
@@ -29,5 +46,5 @@ appropriate database table.
 
 ## Technology Used
 
-RESTful services, API, JPA, MySQL, CRUD, AWS, JUnit testing.
+Angular, JavaSCript, RESTful services, API, JPA, MySQL, CRUD, AWS, JUnit testing.
 
