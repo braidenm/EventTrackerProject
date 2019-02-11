@@ -2,7 +2,7 @@
 
 ## WEEK 12 HOME-WORK UPDATE
 
-link to site on AWS: 
+link to site on AWS: http://54.219.123.219:8080/TravelREST/#/home
  
 Used angular to build the front end. I ran out of time and was not able to fully implement all of the features set up in the back end. Basic functionality so far: see a list of trips and click on one to see the activities associated with that trip. Add activities, edit the trip details, or delete the trip from the main page. Clicking on an activity will open a new window with more details about that activity including the start and end dates, description, and categories. Add more categories, edit the activity detail, or delete the activity. 
 
