@@ -1,0 +1,63 @@
+
+<br>
+<br>
+<div style="border: solid">
+    <div *ngIf="!editActivity && activity">
+    <h1>{{activity.name}}</h1>
+    <!-- <p>Trip: {{activity.trip.name}}</p> -->
+    <p>Decription: {{activity.description}}</p>
+    <p>Start Date: {{activity.startDate}}</p>
+    <p>End Date: {{activity.endDate}}</p>
+
+    <table *ngIf="activity && activity.categories.length > 0" class="table table-striped" style="border: solid">
+        <thead class="thead-dark">
+          <th>Category</th>
+          <th>Remove</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let category of activity.categories">
+            <td>{{category.name}}</td>
+            <td>
+              <button class="btn btn-danger" (click)="removeCategory(category.id)">
+                X
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <button class="btn btn-outline-primary" type="button" (click)="getAllCategories()">Add Category
+        <span class="caret"></span></button>
+      <table class="table table-striped" style="border: solid" *ngIf="categories">
+            <tr *ngFor="let cat of categories" (click)="addCategory(cat.id)">{{cat.name}}</tr>
+      </table>
+
+      <!-- <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Add Category</button>
+      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        <button class="dropdown-item" *ngFor="let cat of categories" value="cat" (click)="addCategory(cat.id)">{{cat.name}}</button>
+      </div> -->
+      <!-- <form>
+        <select>
+          <option>Add Category</option>
+          <option name="category" *ngFor="let cat of categories" value="cat" ngm>{{cat.name}}</option>
+        </select>
+        <input type="submit" class="btn btn-outline-primary" value="Add Category" (click)="addCategory(add)">
+      </form> -->
+      <br>
+      <br>
+
+      <button class="bnt btn-primary" (click)="setEditActivity()">Edit</button>
+      <button class="bnt btn-danger" (click)="deleteActivity(activity.id)">Delete</button>
+  </div>
+  <div *ngIf="editActivity">
+    <form>
+      <input type="text" placeholder="name" value={{editActivity.name}} name="name" [(ngModel)]="editActivity.name">
+      <input type="text" placeholder="description" value={{editActivity.description}} name="description" [(ngModel)]="editActivity.description">
+      <input type="date" value={{editActivity.startDate}} name="startDate" [(ngModel)]="editActivity.startDate">
+      <input type="date" value={{editActivity.endDate}} name="endDate" [(ngModel)]="editActivity.endDate">
+      <input type="button" value="Cancel" class="btn btn-secondary" (click)="cancelEdit()">
+      <input type="button" value="Submit" class="btn btn-primary" (click)="confirmEdit()">
+    </form>
+  </div>
+
+</div>

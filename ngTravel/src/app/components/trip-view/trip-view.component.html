@@ -1,0 +1,60 @@
+
+
+<br>
+<h1>Trips: {{tripCount}}</h1>
+<form #newTrip= "ngForm">
+    <div class="form-group">
+      <input class="form-control" type="text" name="name" placeholder="Trip Name" ngModel>
+    </div>
+    <input type="submit" class="btn btn-primary" value="Add Trip" (click)="addTrip(newTrip)">
+  </form>
+<br>
+<ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+    <div *ngFor="let trip of trips">
+      <ngb-panel  title={{trip.name}}>
+        <ng-template ngbPanelContent>
+          <div *ngIf="!editTrip">
+            <p>{{trip.description}}</p>
+            <h4 *ngIf="trip.activities">Activities: </h4>
+            <table class="table table-striped" style="border: solid">
+                <thead class="thead-dark">
+                  <th>Activity</th>
+                  <th>Date</th>
+                  <th>Delete</th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let activity of trip.activities" >
+                    <td (click)=activityView(activity.id)>{{activity.name}}</td>
+                    <td>{{activity.startDate}}</td>
+                    <td> <button class="btn btn-danger" (click)='deleteActivity(activity.id)'>X</button></td>
+                  </tr>
+
+                </tbody>
+              </table>
+
+              <form #newActivity= "ngForm">
+                <!-- <input type="hidden" name="tripId" value="3" ngModel> -->
+                  <div class="form-group">
+                  <input class="form-control" type="text" name="name" placeholder="Activity Name" ngModel>
+                </div>
+                <input type="submit" class="btn btn-outline-primary" value="Add Activity" (click)="addActivity(newActivity, trip.id)">
+              </form>
+              <br>
+
+              <button class="bnt btn-primary" (click)="setEditTrip(trip)">Edit</button>
+              <button class="bnt btn-danger" (click)="deleteTrip(trip.id)">Delete</button>
+            </div>
+            <div *ngIf="editTrip">
+              <form>
+                <input class="form-control" type="text" name="name" [(ngModel)]="editTrip.name">
+                <input class="form-control" type="text" name="description" [(ngModel)]="editTrip.description" >
+                <input class="bnt btn-secondary" type="button" name="cancel" value="Cancel" (click)="cancelTrip()">
+                <input class="btn btn-primary" name="updateTrip" value="Save" (click)="updateTrip()">
+              </form>
+            </div>
+          </ng-template>
+
+        </ngb-panel>
+      </div>
+</ngb-accordion>
+
