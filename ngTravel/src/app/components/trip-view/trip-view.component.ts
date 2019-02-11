@@ -126,6 +126,7 @@ export class TripViewComponent implements OnInit {
     return this.router.navigateByUrl('activityView/' + id);
   }
   deleteActivity(id: number) {
+
     this.aService.deleteActivity(id).subscribe(
       data => {
 
